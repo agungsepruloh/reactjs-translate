@@ -1,12 +1,16 @@
 import React from "react";
 import UserCreate from "./UserCreate";
 import LanguageContext from "../contexts/LanguageContext";
+import ColorContext from "../contexts/ColorContext";
 
 class App extends React.Component {
-  state = { language: "english" };
+  state = { language: "english", color: "primary" };
 
   onLanguageChange = language => {
-    this.setState({ language: language });
+    this.setState({
+      language: language,
+      color: language === "english" ? "red" : "primary"
+    });
   };
 
   render() {
@@ -23,9 +27,11 @@ class App extends React.Component {
             onClick={() => this.onLanguageChange("dutch")}
           />
           {/* value property for provider is a special property, you can't change the name of it */}
-          <LanguageContext.Provider value={this.state.language}>
-            <UserCreate />
-          </LanguageContext.Provider>
+          <ColorContext.Provider value={this.state.color}>
+            <LanguageContext.Provider value={this.state.language}>
+              <UserCreate />
+            </LanguageContext.Provider>
+          </ColorContext.Provider>
         </div>
       </div>
     );
